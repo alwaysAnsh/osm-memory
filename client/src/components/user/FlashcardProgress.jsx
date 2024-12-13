@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Papa from "papaparse";
+import "./Flashcard.css"; // Import the CSS file
 
 const FlashcardProgress = () => {
   const { user } = useSelector((state) => state.user);
@@ -11,14 +12,13 @@ const FlashcardProgress = () => {
   const { subcategoryName } = useParams();
   const { categoryName } = useParams();
 
-  const [fileData, setFileData] = useState([]); // Parsed data (questions)
-  const [completedIndices, setCompletedIndices] = useState([]); // Tracks completed indices
-  const [currentIndex, setCurrentIndex] = useState(0); // Tracks current question
-  const [showAnswer, setShowAnswer] = useState(false); // Toggles answer visibility
+  const [fileData, setFileData] = useState([]);
+  const [completedIndices, setCompletedIndices] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [showAnswer, setShowAnswer] = useState(false);
   const [subcategoryId, setSubcategoryId] = useState("");
   const [quizCompleted, setQuizCompleted] = useState(false);
 
-  // Fetch and parse the file
   const fetchFileFromSubcategory = async (categoryName, subcategoryName) => {
     try {
       const response = await axios.post(
@@ -133,6 +133,7 @@ const FlashcardProgress = () => {
 
     if (nextIndex < fileData.length) {
       setCurrentIndex(nextIndex);
+      setShowAnswer(false); // Hide answer when moving to the next question
     } else {
       setQuizCompleted(true);
     }
@@ -180,21 +181,29 @@ const FlashcardProgress = () => {
 
   return (
     <div className="mx-auto text-center flex flex-col mt-[10%]">
-      <div className="flashcard-container mx-auto bg-white shadow-lg rounded-lg p-6 text-black max-w-md">
+      <div className="flashcard-container mx-auto text-black max-w-md">
         {!quizCompleted ? (
           <>
             <h2 className="text-xl font-bold">{subcategoryName} Quiz</h2>
-            <p className="question-text my-4 text-lg">
-              <strong>Question:</strong> {currentQuestion?.question}
-            </p>
-            {showAnswer && (
-              <p className="answer-text my-4 bg-gray-100 p-2 rounded">
-                <strong>Answer:</strong> {currentQuestion?.answer}
-              </p>
-            )}
+            <div className="flip-card mx-auto my-4">
+              <div className={`flip-card-inner ${showAnswer ? "flip" : ""}`}>
+                {/* Question side */}
+                <div className="flip-card-front">
+                  <p className="question-text text-lg">
+                    <strong>Question:</strong> {currentQuestion?.question}
+                  </p>
+                </div>
+                {/* Answer side */}
+                <div className="flip-card-back">
+                  <p className="answer-text text-lg">
+                    <strong>Answer:</strong> {currentQuestion?.answer}
+                  </p>
+                </div>
+              </div>
+            </div>
             <div className="controls flex gap-4 justify-center mt-4">
               <button
-                onClick={() => handleCorrect(currentIndex)}
+                onClick={handleCorrect}
                 className="correct-btn rounded-lg bg-green-500 text-white px-4 py-2"
               >
                 Correct
@@ -206,7 +215,7 @@ const FlashcardProgress = () => {
                 Wrong
               </button>
               <button
-                onClick={() => setShowAnswer((prev) => !prev)}
+                onClick={() => setShowAnswer(true)} // Show answer when clicked
                 className="rounded-lg bg-blue-500 text-white px-4 py-2"
               >
                 Show Answer
