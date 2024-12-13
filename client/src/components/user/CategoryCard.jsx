@@ -10,8 +10,8 @@ const CategoryCard = ({ category }) => {
     <div className="border rounded-lg shadow-md p-4 bg-white hover:shadow-lg transition-shadow">
       <h2 className="text-lg font-semibold mb-4">{category.name}</h2>
 
-      {/* Responsive grid for subcategories */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Horizontal Scrollable Container for Subcategories */}
+      <div className="flex flex-row space-x-4 overflow-x-auto py-2">
         {category.subcategories.map((subcat, index) => (
           <div
             key={`${subcat.name}-${index}`}
