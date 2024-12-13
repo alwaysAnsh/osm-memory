@@ -1,0 +1,20 @@
+.item1 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  border-right: 2px solid gray;
+}
+.dashboard {
+  display: grid;
+  grid-template-columns: 285px 1fr;
+  height: 100vh;
+  gap: 0px;
+  background-color: white;
+  padding: 10px;
+}
+
+.item2 {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  background-color: #e0e0dc9e;
+  padding: 20px;
+}
