@@ -8,9 +8,7 @@ import "./Flashcard.css"; // Import the CSS file
 const FlashcardProgress = () => {
   const { user } = useSelector((state) => state.user);
   const { token } = useSelector((state) => state.user);
-
-  const { subcategoryName } = useParams();
-  const { categoryName } = useParams();
+  const { subcategoryName, categoryName } = useParams();
 
   const [fileData, setFileData] = useState([]);
   const [completedIndices, setCompletedIndices] = useState([]);
@@ -32,44 +30,33 @@ const FlashcardProgress = () => {
       );
 
       if (response.data.fileUrl) {
-        await fetchAndParseFile(response.data.fileUrl, subcategoryName);
-
+        await fetchAndParseFile(response.data.fileUrl);
         if (response.data.subcategoryId) {
           setSubcategoryId(response.data.subcategoryId);
-        } else {
-          console.error("Subcategory ID not found in response.");
         }
-      } else {
-        console.log("No file data found. File is empty");
       }
     } catch (error) {
       console.error("Error fetching file:", error);
     }
   };
 
-  const fetchAndParseFile = async (fileUrl, subcategoryName) => {
+  const fetchAndParseFile = async (fileUrl) => {
     try {
-      const response = await axios.get(fileUrl, {
-        responseType: "blob",
-      });
+      const response = await axios.get(fileUrl, { responseType: "blob" });
 
-      if (response.data.type === "application/json") {
-        const textData = await response.data.text();
-        const jsonData = JSON.parse(textData);
-        setFileData(jsonData);
-      } else if (response.data.type === "text/csv") {
-        const textData = await response.data.text();
+      const textData = await response.data.text();
+      const fileType = response.data.type;
+
+      if (fileType.includes("json")) {
+        setFileData(JSON.parse(textData));
+      } else if (fileType.includes("csv")) {
         Papa.parse(textData, {
-          complete: (result) => {
-            setFileData(result.data);
-          },
+          complete: (result) => setFileData(result.data),
           header: true,
         });
-      } else {
-        console.error("Unsupported file type:", response.data.type);
       }
     } catch (error) {
-      console.error(`Error fetching or parsing file from ${fileUrl}:`, error);
+      console.error(`Error parsing file:`, error);
     }
   };
 
@@ -80,9 +67,7 @@ const FlashcardProgress = () => {
           user._id
         }/${subcategoryId}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
       setCompletedIndices(response.data.completedIndices || []);
@@ -99,9 +84,7 @@ const FlashcardProgress = () => {
         }/${subcategoryId}`,
         { index },
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
       setCompletedIndices((prev) => [...prev, index]);
@@ -133,7 +116,7 @@ const FlashcardProgress = () => {
 
     if (nextIndex < fileData.length) {
       setCurrentIndex(nextIndex);
-      setShowAnswer(false); // Hide answer when moving to the next question
+      setShowAnswer(false);
     } else {
       setQuizCompleted(true);
     }
@@ -146,9 +129,7 @@ const FlashcardProgress = () => {
           user._id
         }/${subcategoryId}`,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
       setCompletedIndices([]);
@@ -163,7 +144,7 @@ const FlashcardProgress = () => {
     if (completedIndices.includes(currentIndex)) {
       goToNextQuestion();
     }
-  }, [completedIndices, currentIndex, fileData]);
+  }, [completedIndices, currentIndex]);
 
   useEffect(() => {
     fetchFileFromSubcategory(categoryName, subcategoryName);
@@ -173,67 +154,56 @@ const FlashcardProgress = () => {
     if (subcategoryId) fetchProgress();
   }, [subcategoryId]);
 
-  const currentQuestion = fileData[currentIndex];
-
   if (fileData.length === 0) {
     return <p>Loading questions...</p>;
   }
 
   return (
-    <div className="mx-auto text-center flex flex-col mt-[10%]">
-      <div className="flashcard-container mx-auto text-black max-w-md">
+    <div className="flex items-center justify-center h-screen bg-black">
+      <div className="flashcard-container text-center text-black">
         {!quizCompleted ? (
           <>
-            <h2 className="text-xl font-bold">{subcategoryName} Quiz</h2>
+            <h2 className="text-xl font-bold text-white mb-6">
+              {subcategoryName} Quiz
+            </h2>
             <div className="flip-card mx-auto my-4">
               <div className={`flip-card-inner ${showAnswer ? "flip" : ""}`}>
-                {/* Question side */}
                 <div className="flip-card-front">
-                  <p className="question-text text-lg">
-                    <strong>Question:</strong> {currentQuestion?.question}
+                  <p className="question-text">
+                    Question: {fileData[currentIndex]?.question}
                   </p>
                 </div>
-                {/* Answer side */}
                 <div className="flip-card-back">
-                  <p className="answer-text text-lg">
-                    <strong>Answer:</strong> {currentQuestion?.answer}
+                  <p className="answer-text">
+                    Answer: {fileData[currentIndex]?.answer}
                   </p>
                 </div>
               </div>
             </div>
             <div className="controls flex gap-4 justify-center mt-4">
-              <button
-                onClick={handleCorrect}
-                className="correct-btn rounded-lg bg-green-500 text-white px-4 py-2"
-              >
+              <button onClick={handleCorrect} className="correct-btn">
                 Correct
               </button>
-              <button
-                onClick={handleWrong}
-                className="rounded-lg bg-red-500 text-white px-4 py-2"
-              >
+              <button onClick={handleWrong} className="wrong-btn">
                 Wrong
               </button>
               <button
-                onClick={() => setShowAnswer(true)} // Show answer when clicked
-                className="rounded-lg bg-blue-500 text-white px-4 py-2"
+                onClick={() => setShowAnswer(true)}
+                className="show-answer-btn"
               >
                 Show Answer
               </button>
             </div>
           </>
         ) : (
-          <p className="text-lg font-bold text-green-600">Quiz Completed!</p>
+          <div>
+            <p className="completed-message">Quiz Completed!</p>
+            <button onClick={resetProgress} className="reset-btn">
+              Reset Progress
+            </button>
+          </div>
         )}
       </div>
-      {quizCompleted && (
-        <button
-          onClick={resetProgress}
-          className="reset-btn mx-auto mt-4 rounded-lg bg-yellow-500 text-white px-4 py-2"
-        >
-          Reset Progress
-        </button>
-      )}
     </div>
   );
 };

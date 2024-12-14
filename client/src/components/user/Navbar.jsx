@@ -35,14 +35,14 @@ const Navbar = () => {
           </span>
         </Link>
 
-        {/* Search Bar */}
-        <div className="hidden md:flex flex-1 justify-center">
+        {/* Commented out Search Bar */}
+        {/* <div className="hidden md:flex flex-1 justify-center">
           <input
             type="text"
             placeholder="Search..."
             className="w-2/3 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
           />
-        </div>
+        </div> */}
 
         {/* Right-Side Buttons */}
         <div className="flex items-center space-x-4">
@@ -110,13 +110,13 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Search Bar */}
-      <div className="flex md:hidden p-4">
+      {/* <div className="flex md:hidden p-4">
         <input
           type="text"
           placeholder="Search..."
           className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
         />
-      </div>
+      </div> */}
 
       {/* Update Profile Modal */}
       {isUpdateProfileModalOpen && (

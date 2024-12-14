@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import {useNavigate} from 'react-router-dom'
-import {useDispatch} from 'react-redux'
-import { setUser} from "../../redux/userSlice";
-import axios from 'axios'
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../redux/userSlice";
+import axios from "axios";
 import SignInWithGoogle from "./SignInWithGoogle";
 
 const AuthLogin = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-  })
+  });
   const togglePasswordVisibility = () => {
     setPasswordVisible((prev) => !prev);
   };
@@ -21,27 +21,30 @@ const AuthLogin = () => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value
+      [name]: value,
     }));
   };
 
-  const handleLoginFormSubmit = async(event) => {
+  const handleLoginFormSubmit = async (event) => {
     event.preventDefault();
     console.log("Form submitted");
     // Handle login logic here
     try {
-      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/v2/login-email`, formData)
-      if(response.data.success == false){
-        console.log("login failed")
-        return ;
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_URL}/api/v2/login-email`,
+        formData
+      );
+      if (response.data.success == false) {
+        console.log("login failed");
+        return;
       }
       // dispatch(userLoginData(response.data.user))
-      const {user, token} = response.data
-      
-      dispatch(setUser({user, token}))
+      const { user, token } = response.data;
+
+      dispatch(setUser({ user, token }));
       // dispatch(userLogin(response.data.token))
       const userId = response.data.user._id;
-      navigate(`/user-dashboard/${userId}`)
+      navigate(`/user-dashboard/${userId}`);
       setFormData({
         email: "",
         password: "",
@@ -50,19 +53,23 @@ const AuthLogin = () => {
       console.error(error);
       alert(error.response?.data?.message || "Failed to Login");
     }
-
   };
 
   return (
     <div className="flex min-h-screen w-full flex-wrap items-stretch bg-white dark:bg-gray-800 max-md:pb-20 max-md:pt-32">
       <div className="grow md:flex md:w-1/2 md:flex-col md:items-center md:justify-center md:py-20">
         <div className="w-full px-4 text-center text-xs lg:w-1/2">
-          <h1 className="mb-8 text-2xl font-bold text-gray-800 dark:text-white">Welcome Back</h1>
+          <h1 className="mb-8 text-2xl font-bold text-gray-800 dark:text-white">
+            Welcome Back
+          </h1>
           <p className="mb-6 text-gray-600 dark:text-gray-400">
             Access your account to explore our amazing features.
           </p>
-          <form className="flex flex-col gap-6"  onSubmit={handleLoginFormSubmit}>
-            <input id="plan" type="hidden"   />
+          <form
+            className="flex flex-col gap-6"
+            onSubmit={handleLoginFormSubmit}
+          >
+            <input id="plan" type="hidden" />
 
             <div className="relative">
               <label
@@ -75,10 +82,10 @@ const AuthLogin = () => {
                 id="email"
                 className="block peer w-full px-4 py-3 border border-gray-300 bg-gray-100 text-gray-800  dark:bg-gray-700 dark:text-white dark:border-gray-600 placeholder-gray-400 transition-colors focus:border-indigo-500 focus:outline-0 focus:ring focus:ring-indigo-200 dark:focus:ring-indigo-500"
                 name="email"
-                value= {formData.email}
+                value={formData.email}
                 type="email"
                 placeholder="you@example.com"
-                onChange = {handleChange}
+                onChange={handleChange}
               />
             </div>
 
@@ -93,12 +100,11 @@ const AuthLogin = () => {
                 <input
                   id="password"
                   name="password"
-                  value= {formData.password}
+                  value={formData.password}
                   className="block peer w-full px-4 py-3 border border-gray-300 bg-gray-100 text-gray-800  dark:bg-gray-700 dark:text-white dark:border-gray-600 placeholder-gray-400 transition-colors focus:border-indigo-500 focus:outline-0 focus:ring focus:ring-indigo-200 dark:focus:ring-indigo-500"
                   type={passwordVisible ? "text" : "password"}
                   placeholder="Your password"
-                  onChange = {handleChange}
-
+                  onChange={handleChange}
                 />
                 <button
                   className="lqd-show-password absolute right-3 top-1/2 z-10 inline-flex -translate-y-1/2 cursor-pointer items-center justify-center rounded transition-colors hover:bg-gray-200 dark:hover:bg-gray-600"
@@ -144,15 +150,17 @@ const AuthLogin = () => {
             </div>
 
             <div className="my-2 flex justify-between gap-2">
-              
               <div className="text-right">
-                <a className="text-indigo-600 dark:text-indigo-400" href="/forgot-password">
+                <a
+                  className="text-indigo-600 dark:text-indigo-400"
+                  href="/forgot-password"
+                >
                   Forgot Password?
                 </a>
               </div>
             </div>
 
-            <input className="hidden" id="recaptcha"  />
+            <input className="hidden" id="recaptcha" />
             <button
               className="lqd-btn group inline-flex items-center justify-center gap-1.5 font-medium rounded-full transition-all hover:-translate-y-0.5 hover:shadow-xl lqd-btn-primary bg-indigo-600 text-white hover:bg-indigo-500 focus-visible:bg-indigo-700 focus-visible:shadow-indigo-300/10 px-5 py-3"
               id="LoginFormButton"
@@ -160,14 +168,24 @@ const AuthLogin = () => {
             >
               Sign in
             </button>
-            <SignInWithGoogle/>
+            <SignInWithGoogle />
             <div className="text-gray-600 dark:text-gray-400">
               By proceeding, you acknowledge and accept our{" "}
-              <a className="font-medium text-indigo-600 underline" href="/terms" target="_blank" rel="noopener noreferrer">
+              <a
+                className="font-medium text-indigo-600 underline"
+                href="/terms"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Terms and Conditions
               </a>{" "}
               and{" "}
-              <a className="font-medium text-indigo-600 underline" href="/privacy-policy" target="_blank" rel="noopener noreferrer">
+              <a
+                className="font-medium text-indigo-600 underline"
+                href="/privacy-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 Privacy Policy
               </a>
               .
@@ -185,7 +203,8 @@ const AuthLogin = () => {
       <div
         className="hidden flex-col justify-center overflow-hidden bg-cover bg-center md:flex md:w-1/2"
         style={{
-          backgroundImage: "url(https://img.freepik.com/free-vector/gray-neural-network-illustration_53876-78764.jpg?size=626&ext=jpg)",
+          backgroundImage:
+            "url(https://img.freepik.com/free-vector/gray-neural-network-illustration_53876-78764.jpg?size=626&ext=jpg)",
         }}
       >
         <img
