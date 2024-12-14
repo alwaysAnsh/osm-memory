@@ -31,20 +31,20 @@ const Home = () => {
   const { user } = useSelector((state) => state.user); // Get user state from Redux
 
   return (
-    <div className="bg-offWhite flex flex-col min-h-screen">
+    <div className="bg-offWhite flex flex-col min-h-screen ">
       <Navbar />
       <div className="flex-grow px-4 flex flex-col justify-center items-center bg-offWhite mt-8">
         {/* Swiper Slider */}
-        <div className="relative w-full flex justify-center mt-6">
+        <div className="relative w-screen flex justify-center mt-0 ">
           <Swiper
             effect={"coverflow"}
             grabCursor={true}
             centeredSlides={false} // Do not center each image, show multiple
             loop={true}
-            slidesPerView={3} // Adjust this based on how many images you want visible
+            slidesPerView={1} // Adjust this based on how many images you want visible
             spaceBetween={0} // Set this to 0 for no space between images
             coverflowEffect={{
-              rotate: 0,
+              rotate: 10,
               stretch: 0,
               depth: 100,
               modifier: 1.5,
@@ -56,75 +56,82 @@ const Home = () => {
               clickable: true,
             }}
             autoplay={{
-              delay: 1000, // 3 seconds before switching to the next image
+              delay: 3000, // 3 seconds before switching to the next image
               disableOnInteraction: false, // Prevent autoplay from being disabled after interaction
             }}
             modules={[EffectCoverflow, Pagination, Navigation, Autoplay]} // Include Autoplay module
             className="swiper_container"
           >
             <SwiperSlide>
-              <div className="relative w-full h-64">
+              <div className="relative w-screen sm:h-64 lg:h-[390px]">
                 <img
                   src={slide_image_1}
                   alt="slide_image_1"
-                  className="rounded-lg shadow-lg w-full h-full object-cover"
+                  className="rounded-lg shadow-lg w-screen h-full object-cover"
                 />
               </div>
             </SwiperSlide>
+
             <SwiperSlide>
-              <div className="relative w-full h-64">
+              <div className="relative w-screen sm:h-64 lg:h-[390px]">
                 <img
                   src={slide_image_2}
                   alt="slide_image_2"
-                  className="rounded-lg shadow-lg w-full h-full object-cover"
+                  className="rounded-lg shadow-lg w-screen h-full object-cover"
                 />
               </div>
             </SwiperSlide>
+
             <SwiperSlide>
-              <div className="relative w-full h-64">
+              <div className="relative w-screen sm:h-64 lg:h-[390px]">
                 <img
                   src={slide_image_3}
                   alt="slide_image_3"
-                  className="rounded-lg shadow-lg w-full h-full object-cover"
+                  className="rounded-lg shadow-lg w-screen h-full object-cover"
                 />
               </div>
             </SwiperSlide>
+
             <SwiperSlide>
-              <div className="relative w-full h-64">
+              <div className="relative w-screen sm:h-64 lg:h-[390px]">
                 <img
                   src={slide_image_4}
                   alt="slide_image_4"
-                  className="rounded-lg shadow-lg w-full h-full object-cover"
+                  className="rounded-lg shadow-lg w-screen h-full object-cover"
                 />
               </div>
             </SwiperSlide>
+
             <SwiperSlide>
-              <div className="relative w-full h-64">
+              <div className="relative w-screen sm:h-64 lg:h-[390px]">
                 <img
                   src={slide_image_5}
                   alt="slide_image_5"
-                  className="rounded-lg shadow-lg w-full h-full object-cover"
+                  className="rounded-lg shadow-lg w-screen h-full object-cover"
                 />
               </div>
             </SwiperSlide>
+
             <SwiperSlide>
-              <div className="relative w-full h-64">
+              <div className="relative w-screen sm:h-64 lg:h-[390px]">
                 <img
                   src={slide_image_6}
                   alt="slide_image_6"
-                  className="rounded-lg shadow-lg w-full h-full object-cover"
+                  className="rounded-lg shadow-lg w-screen h-full object-cover"
                 />
               </div>
             </SwiperSlide>
+
             <SwiperSlide>
-              <div className="relative w-full h-64">
+              <div className="relative w-screen sm:h-64 lg:h-[390px]">
                 <img
                   src={slide_image_7}
                   alt="slide_image_7"
-                  className="rounded-lg shadow-lg w-full h-full object-cover"
+                  className="rounded-lg shadow-lg w-screen h-full object-cover"
                 />
               </div>
             </SwiperSlide>
+
 
             {/* Slider controls */}
             <div className="slider-controler">
