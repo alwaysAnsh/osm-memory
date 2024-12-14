@@ -23,9 +23,9 @@ const slide_image_4 =
 const slide_image_5 =
   "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:eco%2Cw_1200/MTc2MjcyOTk1NDk1NDUzODY5/memory-technique-remembering-a-random-list-of-20-items.jpg";
 const slide_image_6 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpB6EWX8TtodvQpMH3kT5F_TkuvaHGnHkfpg&s";
+  "https://media.istockphoto.com/id/1349161222/vector/declutter-your-mind-clear-your-brain-to-regain-focus-improve-creative-thinking-ability-free.jpg?s=612x612&w=0&k=20&c=mL3JyJ_FLhY9UBo7gUZfySs-jTtOVOVunaJfFijxldg=";
 const slide_image_7 =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbKANlgOIgLL0CzHy0KNQIgLY7dnmJHIRFAw&s";
+  "https://images.unsplash.com/photo-1720774102378-270d8296092b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fG1lbW9yaWVzfGVufDB8fDB8fHww";
 
 const Home = () => {
   const { user } = useSelector((state) => state.user); // Get user state from Redux
@@ -33,7 +33,7 @@ const Home = () => {
   return (
     <div className="bg-offWhite flex flex-col min-h-screen ">
       <Navbar />
-      <div className="flex-grow px-4 flex flex-col justify-center items-center bg-offWhite mt-8">
+      <div className="flex-grow px-4 flex flex-col justify-center items-center bg-offWhite mt-2">
         {/* Swiper Slider */}
         <div className="relative w-screen flex justify-center mt-0 ">
           <Swiper
