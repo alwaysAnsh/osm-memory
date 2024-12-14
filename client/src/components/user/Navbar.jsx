@@ -46,7 +46,7 @@ const Navbar = () => {
             className="h-8"
             alt="Flowbite Logo"
           />
-          <span className="self-center ml-2 text-2xl font-semibold whitespace-nowrap dark:text-white">
+          <span className="self-center font-mono ml-2 text-2xl font-semibold whitespace-nowrap dark:text-[#1A50E5]">
             OsmMemory
           </span>
         </Link>
@@ -83,7 +83,7 @@ const Navbar = () => {
             <>
               <Link
                 to="/auth-L"
-                className="text-gray-800 dark:text-white px-4 py-2 border-b border-b-blue-600 rounded-lg  hover:text-white"
+                className="text-gray-800  dark:text-offWhite px-4 py-2 border-b border-b-blue-600 rounded-lg  hover:text-white"
               >
                 Login
               </Link>

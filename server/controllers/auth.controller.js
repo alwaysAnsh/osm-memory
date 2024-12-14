@@ -269,18 +269,19 @@ export const registerWithOTP = async (req, res) => {
 export const loginWithOTP = async (req, res) => {
   try {
     const { mobile, password } = req.body;
-    const user = await User.findOne({ mobile });
+    const user = await User.findOne({phoneNumber: mobile });
+    // console.log("mobile:", mobile)
 
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({success: false, message: "User not found" });
     }
 
-    if(user.password !== password){
-      return res.status(400).json({
-        success: false, 
-        message: "Bad credentials, incorrect password"
-      })
+    // Compare password
+    const isMatch = await compareString(password, user.password);
+    if (!isMatch) {
+      return next("Invalid email or password");
     }
+    
 
     if(!user.verified){
       return res.status(403).json({
@@ -288,6 +289,10 @@ export const loginWithOTP = async (req, res) => {
         message: "forbidden. User not verified"
       })
     }
+
+    user.password = undefined; // Remove password before sending response
+  
+      const token = createJWT(user);
 
     
     // const otp = otpService.generateOTP(mobile);
@@ -298,7 +303,8 @@ export const loginWithOTP = async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "logged in successfully",
-      user
+      user,
+      token
     })
     
 
@@ -309,7 +315,63 @@ export const loginWithOTP = async (req, res) => {
 };
 
 
-//reset password via email
+// ************************************************************************************
+// ************************************************************************************
+// *****************************UPDATE USER*******************************
+// ************************************************************************************
+// ************************************************************************************
+
+export const updateEmail = async (req, res, next) => {
+ 
+  const { email } = req.body;
+  const { userId } = req.params;
+
+  
+
+  // Validate required fields
+  if (!email) {
+    return res.status(400).json({ success: false, message: "Provide email for updation" });
+  }
+
+  // Optional: Validate email format
+  if (!/^\S+@\S+\.\S+$/.test(email)) {
+    return res.status(400).json({ success: false, message: "Invalid email format" });
+  }
+
+  try {
+    // Find user by ID
+    const user = await User.findById(userId);
+
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Update email and save changes
+    user.email = email;
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "User updated successfully",
+      user,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, message: "Server error. Try again later." });
+  }
+};
+
+
+// ************************************************************************************
+// ************************************************************************************
+// ************************************************************************************
+// ************************************************************************************
+// *****************************RESET PASSWORDS VIA EMAIL*******************************
+// ************************************************************************************
+// ************************************************************************************
+// ************************************************************************************
+// ************************************************************************************
 
 export const requestPasswordReset = async (req, res) => {
   try {

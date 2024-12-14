@@ -18,6 +18,7 @@ import UserDashboardExample from "./components/user/UserDashboardExample";
 import ForgotPassword from "./pages/ForgotPassword";
 import SetNewPassword from "./pages/SetNewPassword";
 import FlashcardProgress from "./components/user/FlashcardProgress";
+import LoginWithOtp from "./components/Home/LoginWithOtp";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/" element={<Home />} /> {/* Hero page */}
         <Route path="/auth-L" element={<AuthLogin />} /> {/* Login page */}
         <Route path="/auth-R" element={<AuthRegister />} />{" "}
+        <Route path="/auth-phone" element={<LoginWithOtp />} />{" "}
         {/* Register page */}
         <Route path="/auth-admin" element={<AdminLogin />} /> {/* Admin page */}
         <Route path="/verification-success" element={<VerificationSuccess />} />

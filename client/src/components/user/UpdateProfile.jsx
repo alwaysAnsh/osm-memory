@@ -5,9 +5,9 @@ import axios from "axios";
 const UpdateProfile = ({ onClose }) => {
   const { user } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
-    name: user?.name || "",
+    name: user?.firstName || "",
     email: user?.email || "",
-    profilePicture: null, // For file uploads
+    
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -23,12 +23,12 @@ const UpdateProfile = ({ onClose }) => {
   };
 
   // Handle file upload
-  const handleFileChange = (e) => {
-    setFormData((prevState) => ({
-      ...prevState,
-      profilePicture: e.target.files[0],
-    }));
-  };
+  // const handleFileChange = (e) => {
+  //   setFormData((prevState) => ({
+  //     ...prevState,
+  //     profilePicture: e.target.files[0],
+  //   }));
+  // };
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -36,37 +36,44 @@ const UpdateProfile = ({ onClose }) => {
     setLoading(true);
     setError(null);
     setSuccessMessage("");
-
+  
     try {
-      const formDataToSend = new FormData();
-      formDataToSend.append("name", formData.name);
-      formDataToSend.append("email", formData.email);
-      if (formData.profilePicture) {
-        formDataToSend.append("profilePicture", formData.profilePicture);
-      }
-
+      // Prepare JSON payload
+      const dataToSend = {
+        firstName: formData.name,
+        email: formData.email,
+      };
+  
       // Make API request to update profile
       const response = await axios.put(
-        `${import.meta.env.VITE_API_URL}/users/update-profile/${user._id}`,
-        formDataToSend,
+        `${import.meta.env.VITE_API_URL}/api/v2/update-profile/${user._id}`,
+        dataToSend, // Sending JSON data instead of FormData
         {
           headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${user.token}`, // Add token if required
+            "Content-Type": "application/json", // Ensure the backend knows the payload is JSON
           },
         }
       );
-
-      // Handle success
+  
+      if (response.data.success === false) {
+        console.error("Error updating profile:", response.data.message);
+        setError(response.data.message || "Failed to update profile. Try again.");
+        return;
+      }
+  
       setSuccessMessage("Profile updated successfully!");
       onClose(); // Close modal after success
     } catch (error) {
       console.error(error);
-      setError("Failed to update profile. Please try again.");
+      setError(
+        error.response?.data?.message || "Failed to update profile. Please try again."
+      );
     } finally {
       setLoading(false);
     }
   };
+
+  
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -108,7 +115,7 @@ const UpdateProfile = ({ onClose }) => {
             />
           </div>
           {/* Profile Picture Upload */}
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label className="block text-gray-700">Profile Picture</label>
             <input
               type="file"
@@ -116,7 +123,7 @@ const UpdateProfile = ({ onClose }) => {
               onChange={handleFileChange}
               className="w-full p-2 border rounded-lg"
             />
-          </div>
+          </div> */}
           <button
             type="submit"
             className={`${

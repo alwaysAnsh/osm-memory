@@ -3,15 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/userSlice";
 import axios from "axios";
-import SignInWithGoogle from "./SignInWithGoogle";
-import {Link} from 'react-router-dom'
 
-const AuthLogin = () => {
+
+const LoginWithOtp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [formData, setFormData] = useState({
-    email: "",
+    mobile: "+91",
     password: "",
   });
   const togglePasswordVisibility = () => {
@@ -32,7 +31,7 @@ const AuthLogin = () => {
     // Handle login logic here
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/v2/login-email`,
+        `${import.meta.env.VITE_API_URL}/api/v2/login-mobile`,
         formData
       );
       if (response.data.success == false) {
@@ -47,7 +46,7 @@ const AuthLogin = () => {
       const userId = response.data.user._id;
       navigate(`/user-dashboard/${userId}`);
       setFormData({
-        email: "",
+        mobile: "+91",
         password: "",
       });
     } catch (error) {
@@ -77,15 +76,15 @@ const AuthLogin = () => {
                 className="flex cursor-pointer items-center gap-2 text-xs font-medium leading-none text-gray-700 dark:text-gray-200 mb-3"
                 htmlFor="email"
               >
-                <span>Email Address</span>
+                <span>Phone Number</span>
               </label>
               <input
-                id="email"
+                id="mobile"
                 className="block peer w-full px-4 py-3 border border-gray-300 bg-gray-100 text-gray-800  dark:bg-gray-700 dark:text-white dark:border-gray-600 placeholder-gray-400 transition-colors focus:border-indigo-500 focus:outline-0 focus:ring focus:ring-indigo-200 dark:focus:ring-indigo-500"
-                name="email"
-                value={formData.email}
-                type="email"
-                placeholder="you@example.com"
+                name="mobile"
+                value={formData.mobile}
+                type="tel"
+                placeholder="123567890"
                 onChange={handleChange}
               />
             </div>
@@ -169,17 +168,7 @@ const AuthLogin = () => {
             >
               Sign in
             </button>
-            {/* <SignInWithGoogle /> */}
-
-            <Link to='/auth-phone'>
-            <button
-              className="lqd-btn group inline-flex items-center justify-center gap-1.5 font-medium rounded-full transition-all hover:-translate-y-0.5 hover:shadow-xl lqd-btn-primary bg-red-600 text-white hover:bg-red-500 focus-visible:bg-indigo-700 focus-visible:shadow-indigo-300/10 px-5 py-3" 
-             
-            >
-              use Phone number instead
-            </button>
-            </Link>
-
+            
             <div className="text-gray-600 dark:text-gray-400">
               By proceeding, you acknowledge and accept our{" "}
               <a
@@ -228,4 +217,4 @@ const AuthLogin = () => {
   );
 };
 
-export default AuthLogin;
+export default LoginWithOtp;

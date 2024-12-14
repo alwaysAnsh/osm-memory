@@ -1,5 +1,5 @@
 import express from 'express'
-import { changePassword, loginWithEmail, loginWithOTP, registerWithEmail, registerWithOTP, requestPasswordReset, resetPassword, sendOtp, verifyEmail } from '../controllers/auth.controller.js';
+import { changePassword, loginWithEmail, loginWithOTP, registerWithEmail, registerWithOTP, requestPasswordReset, resetPassword, sendOtp, updateEmail, verifyEmail } from '../controllers/auth.controller.js';
 import { verifyOtpMiddleware } from '../middleware/otp.middleware.js';
 
 const router = express.Router();
@@ -29,5 +29,13 @@ router.post("/reset-password", changePassword);
 router.post('/send-otp', sendOtp)
 router.post('/register-mobile', verifyOtpMiddleware, registerWithOTP)
 router.post('/login-mobile', loginWithOTP)
+
+// ************************************************************************************
+// ************************************************************************************
+// *****************************UPDATE PROFILE ROUTES*******************************
+// ************************************************************************************
+// ************************************************************************************
+
+router.put('/update-profile/:userId', updateEmail)
 
 export default router
