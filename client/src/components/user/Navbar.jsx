@@ -14,6 +14,7 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isUpdateProfileModalOpen, setIsUpdateProfileModalOpen] =
     useState(false); // Modal state
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Mobile menu state
 
   const handleLogout = () => {
     dispatch(clearUser());
@@ -35,8 +36,33 @@ const Navbar = () => {
           </span>
         </Link>
 
-        {/* Navbar buttons */}
-        <div className="flex items-center space-x-4">
+        {/* Mobile menu button */}
+        <button
+          className="lg:hidden text-gray-800 dark:text-white"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            className="w-8 h-8"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+
+        {/* Navbar links */}
+        <div
+          className={`lg:flex items-center space-x-4 ${
+            isMobileMenuOpen ? "flex" : "hidden"
+          }`}
+        >
           {!user ? (
             // Show login and sign up buttons when not logged in
             <>
