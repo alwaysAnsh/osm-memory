@@ -78,15 +78,7 @@ const UserDashboard = () => {
       <Navbar />
       <div className="px-4 flex flex-col justify-center items-center bg-gradient-to-bl from-[#ffe4e6]  to-[#ccfbf1]">
         <div></div>
-        <h1 className="text-xl font-bold my-4">
-          Welcome, {user.firstName}! 😊
-        </h1>
-        <button
-          onClick={handleLogout}
-          className="rounded-md bg-red-600 text-white px-4 py-2"
-        >
-          Logout
-        </button>
+        <img src="" alt="" />
         {/* Categories Section with Fixed Height and Scroll */}
         <div
           className="overflow-y-auto mt-6 p-3 rounded-lg"
