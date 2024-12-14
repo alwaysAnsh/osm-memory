@@ -77,7 +77,9 @@ const UserDashboard = () => {
     <div>
       <Navbar />
       <div className="px-4 flex flex-col justify-center items-center bg-gradient-to-bl from-[#ffe4e6]  to-[#ccfbf1]">
-        <div></div>
+        <div  className='mt-3 text-3xl font-heading font-semibold text-pink-800' >
+          Welcome, {user.firstName}
+        </div>
         <img src="" alt="" />
         {/* Categories Section with Fixed Height and Scroll */}
         <div

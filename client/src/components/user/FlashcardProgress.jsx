@@ -161,7 +161,7 @@ const FlashcardProgress = () => {
   }
 
   return (
-    <div className="flex items-center justify-center h-screen bg-black">
+    <div className="flex items-center justify-center h-screen bg-gradient-to-tl from-[#4b5d67] via-[#322f3d] to-[#59405c]">
       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
         <h2 className="text-xl font-bold mb-4">Quiz Instructions</h2>
         <ul className="list-disc pl-4 text-sm">

@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import {useDispatch} from 'react-redux'
+import { setUser, updateUserProfile } from "../../redux/userSlice";
+
 
 const UpdateProfile = ({ onClose }) => {
   const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch()
   const [formData, setFormData] = useState({
     name: user?.firstName || "",
     email: user?.email || "",
@@ -60,7 +64,8 @@ const UpdateProfile = ({ onClose }) => {
         setError(response.data.message || "Failed to update profile. Try again.");
         return;
       }
-  
+      
+      dispatch(updateUserProfile(response.data.user))
       setSuccessMessage("Profile updated successfully!");
       onClose(); // Close modal after success
     } catch (error) {
@@ -76,7 +81,7 @@ const UpdateProfile = ({ onClose }) => {
   
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-gray-300 bg-opacity-50 z-50">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
         <button
           className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
@@ -98,8 +103,9 @@ const UpdateProfile = ({ onClose }) => {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full p-2 border rounded-lg"
+              className="w-full p-2 border rounded-lg bg-gray-300 cursor-not-allowed "
               required
+              readOnly
             />
           </div>
           {/* Email Field */}

@@ -57,9 +57,17 @@ const userSlice = createSlice({
       sessionStorage.removeItem("user");
       sessionStorage.removeItem("token");
     },
+    updateUserProfile(state, action) {
+      if (state.user) {
+        state.user = {
+          ...state.user, // Keep existing user properties
+          ...action.payload, // Overwrite with updated fields from the payload
+        };
+      }
+    }
   },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
+export const { setUser, clearUser, updateUserProfile } = userSlice.actions;
 export default userSlice.reducer;
 

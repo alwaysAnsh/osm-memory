@@ -177,7 +177,11 @@ const Home = () => {
                   >
                     {/* Wrap subcategory in Link to make it clickable */}
                     <Link
-                      to={"/auth-L"} // Corrected path
+                      to={
+                        user
+                          ? `/user-dashboard/${user._id}/${category.name}/${subcat.name}`
+                          : "/auth-L"
+                      } // Corrected path
                       className="flex flex-col items-center text-center cursor-pointer"
                     >
                       {/* Render Uploaded Image as Icon */}
@@ -205,7 +209,11 @@ const Home = () => {
           ))}
         </div>
 
-        <Link to="/auth-L" className="mt-8">
+        <Link to={
+                        user
+                          ? `/user-dashboard/${user._id}`
+                          : "/auth-L"
+                      }  className="mt-8">
           <ExploreMore />
         </Link>
 
