@@ -15,7 +15,7 @@ const CategoryCard = ({ category }) => {
       <h2 className="text-lg font-semibold mb-4">{category.name}</h2>
 
       {/* Horizontal Scrollable Container for Subcategories */}
-      <div className="flex flex-row space-x-4 overflow-x-auto py-2">
+      <div className="flex flex-row space-x-4 overflow-x-auto py-2 scrollbar-hidden">
         {category.subcategories.map((subcat, index) => (
           <div
             key={`${subcat.name}-${index}`}
