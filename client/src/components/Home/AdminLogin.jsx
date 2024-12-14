@@ -51,7 +51,7 @@ const AdminLogin = () => {
     <div className="min-h-screen flex">
       {/* Left Side: Gradient Background and Form */}
       <div className="flex-1 flex justify-center items-center bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 p-6 sm:p-12 shadow-lg rounded-lg">
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md ">
           <div className="flex justify-center">
             <h1
               className="text-5xl font-bold bg-gradient-to-r from-amber-100
@@ -115,32 +115,18 @@ to-lime-100 text-transparent bg-clip-text"
             </button>
           </form>
 
-          <div className="mt-4 text-center">
-            <a
-              href="/forgot-password"
-              className="text-sm text-indigo-200 hover:underline"
-            >
-              Forgot Password?
-            </a>
-          </div>
+          
 
-          <div className="mt-6 text-center text-white">
-            <p>Don't have an account?</p>
-            <a
-              href="/auth-admin/register"
-              className="text-indigo-200 font-medium hover:underline"
-            >
-              Sign up
-            </a>
-          </div>
+          
         </div>
       </div>
 
       {/* Right Side: Background Image */}
-      <div className="flex md:block md:w-1/2 bg-cover bg-center rounded-r-lg">
+      <div className="flex   bg-cover bg-center rounded-r-lg ">
         <img
           src="https://static.vecteezy.com/system/resources/previews/006/405/796/non_2x/an-illustration-of-admin-panel-avatars-with-website-vector.jpg"
           alt=""
+          className='sm:hidden lg:block lg:w-1/2 '
         />
       </div>
     </div>

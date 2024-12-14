@@ -83,19 +83,19 @@ const Navbar = () => {
             <>
               <Link
                 to="/auth-L"
-                className="text-gray-800 dark:text-white px-4 py-2 border border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white"
+                className="text-gray-800 dark:text-white px-4 py-2 border-b border-b-blue-600 rounded-lg  hover:text-white"
               >
                 Login
               </Link>
               <Link
                 to="/auth-R"
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                className="text-gray-800 dark:text-white px-4 py-2 border-b border-b-red-600 rounded-lg  hover:text-white"
               >
                 Register
               </Link>
               <Link
                 to="/auth-admin"
-                className="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600"
+                className="text-gray-800 dark:text-white px-4 py-2 border-b border-b-orange-600 rounded-lg  hover:text-white"
               >
                 Agent Login
               </Link>
