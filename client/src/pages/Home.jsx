@@ -41,9 +41,10 @@ const Home = () => {
             grabCursor={true}
             centeredSlides={false} // Do not center each image, show multiple
             loop={true}
+            slidesPerView={1} 
             spaceBetween={0} // Set this to 0 for no space between images
             coverflowEffect={{
-              rotate: 10,
+              rotate: 0,
               stretch: 0,
               depth: 100,
               modifier: 1.5,
@@ -58,31 +59,7 @@ const Home = () => {
               prevEl: ".swiper-button-prev",
               clickable: true,
             }}
-            breakpoints={{
-              // When the screen size is less than 640px (mobile)
-              10: {
-                slidesPerView: 1, // Only show one slide
-                spaceBetween: 0,
-                width: "100%", // Full width for smaller screens
-                height: "auto", // Ensure image adjusts to the height based on width
-              },
-              640: {
-                slidesPerView: 1, // Only show one slide
-                spaceBetween: 0,
-                width: "100%", // Full width for smaller screens
-                height: "auto", // Ensure image adjusts to the height based on width
-              },
-              // When the screen size is 640px or above (tablet)
-              768: {
-                slidesPerView: 2, // Show two images at a time
-                spaceBetween: 10, // Optional: add space between the images
-              },
-              // For larger screens
-              1024: {
-                slidesPerView: 3, // Show three images at a time
-                spaceBetween: 20, // Optional: add space between the images
-              },
-            }}
+           
             modules={[EffectCoverflow, Pagination, Navigation, Autoplay]} // Include Autoplay module
             className="swiper_container"
           >
