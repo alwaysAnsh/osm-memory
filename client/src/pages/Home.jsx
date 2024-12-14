@@ -50,7 +50,7 @@ const Home = () => {
               modifier: 1.5,
             }}
             autoplay={{
-              delay: 1000, // 3 seconds before switching to the next image
+              delay: 3000, // 3 seconds before switching to the next image
               disableOnInteraction: false, // Prevent autoplay from being disabled after interaction
             }}
             pagination={{ el: ".swiper-pagination", clickable: true }}
