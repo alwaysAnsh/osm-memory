@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { clearUser } from "../../redux/userSlice";
@@ -16,10 +16,25 @@ const Navbar = () => {
     useState(false); // Modal state
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Mobile menu state
 
+  const dropdownRef = useRef(null); // Ref for the dropdown container
+
   const handleLogout = () => {
     dispatch(clearUser());
     navigate("/"); // Redirect to home after logout
   };
+
+  const handleClickOutside = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setIsDropdownOpen(false); // Close dropdown if clicked outside
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside); // Clean up the listener on unmount
+    };
+  }, []);
 
   return (
     <nav className="bg-white border-gray-200 dark:bg-black">
@@ -88,7 +103,7 @@ const Navbar = () => {
           ) : (
             // Show profile icon and logout button if logged in
             <>
-              <div className="relative">
+              <div className="relative" ref={dropdownRef}>
                 <button
                   className="flex items-center space-x-2 text-gray-800 dark:text-white"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
