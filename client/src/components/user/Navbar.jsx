@@ -106,7 +106,10 @@ const Navbar = () => {
 
                 {/* Dropdown menu */}
                 {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg py-2 dark:bg-gray-800">
+                  <div
+                    className="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg py-2 dark:bg-gray-800"
+                    style={{ zIndex: 1000 }} // Apply z-index for stacking above other content
+                  >
                     <Link
                       to="#"
                       onClick={() => setIsUpdateProfileModalOpen(true)}
