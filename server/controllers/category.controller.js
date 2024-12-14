@@ -136,30 +136,34 @@ export const updateCategoryName = async (req, res ) => {
 
 export const updateSubcategory = async (req, res) => {
   try {
-    const { categoryName, subcategoryName, newName } = req.body; // Names from the request
+    const { categoryName, newName } = req.body; // Names from the request
+    const {subcategoryId} = req.params
     const file = req.file; // New file from the request
-
+    console.log("category: name; ", categoryName)
+    console.log("subcategoryId: name; ", subcategoryId)
+    console.log("newName: name; ", newName)
+    console.log("file:", file)
     // Validate inputs
-    if (!categoryName || !subcategoryName) {
-      return res.status(400).json({ success: false, message: "Category and Subcategory names are required" });
+    if (!categoryName ) {
+      return res.status(400).json({ success: false, message: "Category name is required" });
     }
     if (!newName && !file) {
       return res.status(400).json({ success: false, message: "Provide at least one field to update (newName or file)" });
     }
 
     // Find the category by its name
-    const category = await Category.findOne({ name: categoryName });
+    const category = await Category.findOne({ "subcategories._id": subcategoryId });
     if (!category) {
-      return res.status(404).json({ success: false, message: "Category not found" });
+      return res.status(404).json({ success: false, message: "Category or Subcategory not found" });
     }
 
-    // Find the subcategory within the category
-    const subcategory = category.subcategories.find(
-      (sub) => sub.name.toLowerCase() === subcategoryName.toLowerCase()
-    );
+    // Find the specific subcategory by ID
+    const subcategory = category.subcategories.id(subcategoryId);
     if (!subcategory) {
       return res.status(404).json({ success: false, message: "Subcategory not found" });
     }
+
+   
 
     // Update the subcategory's name if provided
     if (newName) {
@@ -168,7 +172,7 @@ export const updateSubcategory = async (req, res) => {
 
     // Update the subcategory's file if provided
     if (file) {
-      const cloudinaryResponse = await uploadToCloudinary(file.path, "subcategories");
+      const cloudinaryResponse = await uploadOnCloudinary(file.path, "subcategories");
       subcategory.fileUrl = cloudinaryResponse.secure_url; // Save new file URL to the subcategory
     }
 

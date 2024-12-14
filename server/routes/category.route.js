@@ -9,7 +9,8 @@ import {
     getFileUrlForSubcategory, 
     showAllCategories, 
     updateCategory, 
-    updateCategoryName} from '../controllers/category.controller.js';
+    updateCategoryName,
+    updateSubcategory} from '../controllers/category.controller.js';
 
 import adminAuth from '../middleware/admin/admin.middleware.js';
 import { upload } from '../middleware/multer.middleware.js';
@@ -22,7 +23,7 @@ router.post('/create-category', adminAuth, upload.single("file"), createCategory
 router.post('/create-sub-category', adminAuth, upload.single("file"), createSubcategory);
 
 // Update Category
-router.put('/subcategory/:id', adminAuth, updateCategory);
+router.put('/subcategory/:subcategoryId',  adminAuth, upload.single("file"), updateSubcategory);
 router.put('/category/:id', adminAuth, updateCategoryName);
 
 // Delete Category

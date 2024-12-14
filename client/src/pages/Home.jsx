@@ -41,7 +41,7 @@ const Home = () => {
             grabCursor={true}
             centeredSlides={false} // Do not center each image, show multiple
             loop={true}
-            slidesPerView={1}
+            slidesPerView={1} 
             spaceBetween={0} // Set this to 0 for no space between images
             coverflowEffect={{
               rotate: 0,
@@ -59,6 +59,7 @@ const Home = () => {
               prevEl: ".swiper-button-prev",
               clickable: true,
             }}
+           
             modules={[EffectCoverflow, Pagination, Navigation, Autoplay]} // Include Autoplay module
             className="swiper_container"
           >
@@ -131,6 +132,7 @@ const Home = () => {
                 />
               </div>
             </SwiperSlide>
+
 
             {/* Slider controls */}
             <div className="slider-controler">
