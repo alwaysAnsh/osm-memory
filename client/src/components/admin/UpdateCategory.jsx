@@ -70,10 +70,21 @@ const UpdateCategory = () => {
       formData.append("description", updatedData.description);
       if (updatedData.file) formData.append("file", updatedData.file);
 
+      console.log('file:', updatedData.file)
+
       const response = await axios.put(
         `${import.meta.env.VITE_API_URL}/api/v2/subcategory/${subcategoryId}`,
-        formData
+        formData,
+        {
+          
+            headers: { 
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${adminToken}`,
+             },
+          
+        }
       );
+      console.log("response subcategory :", response.data.subcategory )
       alert("Subcategory updated successfully!");
       setSubcategories((prev) =>
         prev.map((sub) =>
