@@ -62,8 +62,9 @@ const Home = () => {
       <Navbar />
       <div className="flex-grow px-4 flex flex-col justify-center items-center bg-offWhite mt-2">
         {/* Swiper Slider */}
-        <div className="relative w-screen flex justify-center mt-0 ">
+        <div className="relative w-screen flex justify-center mt-0 " onContextMenu={(e) => e.preventDefault()}>
           <Swiper
+           
             effect={"coverflow"}
             grabCursor={true}
             centeredSlides={false} // Do not center each image, show multiple

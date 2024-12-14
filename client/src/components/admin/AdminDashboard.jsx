@@ -98,42 +98,6 @@ const AdminDashboard = () => {
   };
   
 
-  // const handleSubmit = async (type) => {
-  //   console.log(`${type} Category Submitted`, formData);
-
-  //   const url = type === "Create" 
-  //     ? `${import.meta.env.VITE_API_URL}/api/v2/create-category` 
-  //     : `${import.meta.env.VITE_API_URL}/api/v2/update-category`;
-
-  //   const formDataToSend = new FormData();
-  //   formDataToSend.append("name", formData.name);
-  //   formDataToSend.append("description", formData.description);
-  //   if (formData.file) {
-  //     formDataToSend.append("file", formData.file);
-  //   }
-
-  //   try {
-  //     const response = await axios.post(url, formDataToSend, {
-  //       headers: {
-  //         "Content-Type": "multipart/form-data",
-  //         Authorization: `Bearer ${adminToken}`, // Include token for authorization
-  //       },
-  //     });
-
-  //     console.log("Response:", response.data);
-  //     // const res = await axios.get(response.data.category.file)
-  //     // console.log("file constent: ", res.data)
-  //     alert(`${type === "Create" ? "Category Created" : "Category Updated"} Successfully!`);
-  //   } catch (error) {
-  //     console.error(error);
-  //     alert(error.response?.data?.message || "Something went wrong!");
-  //   } finally {
-  //     setFormData({ name: "", description: "", file: null });
-  //     setIsCreateModalOpen(false);
-  //     setIsUpdateModalOpen(false);
-  //   }
-  // };
-
 
   const handleLogout = () => {
     console.log("logout")
@@ -154,8 +118,7 @@ const AdminDashboard = () => {
             console.log("Response not found")
             return;
         }
-        // const categoriesData = response.data.categories;
-        // console.log("categories: ", response.data.categories)
+        
         setCategories(response.data.categories)
         
     } catch (error) {
@@ -177,20 +140,27 @@ const AdminDashboard = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-3xl font-bold mb-6">Welcome, Admin!</h1>
-      <div className="flex gap-4">
+      <div
+  style={{
+    backgroundImage: `url('https://t3.ftcdn.net/jpg/03/91/46/10/360_F_391461057_5P0BOWl4lY442Zoo9rzEeJU0S2c1WDZR.jpg')`,
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    height: "100vh", // Set the height as needed
+    width: "100vw", // Set the width as needed
+  }}
+>
+  {/* Your content here */}
+</div>
+      <h1 className="text-3xl font-bold mb-52 text-white absolute ">Welcome, Admin!</h1>
+      <div className="flex gap-4 flex-col absolute">
         <button
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           onClick={() => setIsCreateModalOpen(true)}
         >
           Create Category
         </button>
-        <button
-          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-          onClick={() => setIsUpdateModalOpen(true)}
-        >
-          Update Category
-        </button>
+        
         <button
           className="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700"
           onClick={() => setIsShowCategoriesModalOpen(true)}
@@ -268,7 +238,7 @@ const AdminDashboard = () => {
 
       {/* Create Category Modal 2 */}
       {isCreateModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-pink-200 bg-opacity-20">
           <div className="bg-white p-6 rounded shadow-lg w-96">
             <h2 className="text-2xl font-bold mb-4">Create Category/Subcategory</h2>
             <form>
