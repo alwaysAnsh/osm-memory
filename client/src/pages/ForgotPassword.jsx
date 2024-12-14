@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-
 import axios from "axios";
 import TextInput from "../components/common/TextInput";
 import Loading from "../components/common/Loading";
@@ -53,25 +52,21 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="w-full h-screen bg-bgColor flex items-center justify-center relative p-6">
-      {/* Background Image */}
-      {/* <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${ResetBackground})` }}
-      ></div> */}
+    <div className="w-full h-screen bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center p-6">
+      {/* 3D Card */}
+      <div className="relative bg-white w-full md:w-1/3 2xl:w-1/4 px-8 py-10 rounded-lg shadow-2xl transform transition-transform hover:scale-105 flex flex-col items-center">
+        <p className="text-blue-600 text-3xl font-extrabold mb-6">
+          Forgot Password
+        </p>
 
-      {/* Content */}
-      <div className="relative bg-white/80 w-full md:w-1/3 2xl:w-1/4 px-6 py-8 shadow-md rounded-lg flex flex-col items-center">
-        <p className="text-blue text-2xl font-bold mb-4">Forgot Password</p>
-
-        <span className="text-sm text-blue mb-6 text-center">
+        <span className="text-sm text-gray-600 mb-6 text-center">
           Enter the email address you used during registration, and we’ll help
           you reset your password.
         </span>
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-full flex flex-col gap-4"
+          className="w-full flex flex-col gap-6"
         >
           {/* Email Input */}
           <TextInput
@@ -85,7 +80,7 @@ const ForgotPassword = () => {
                 message: "Please enter a valid email address",
               },
             })}
-            styles="w-full rounded-lg border border-primary px-4 py-2"
+            styles="w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm focus:ring-2 focus:ring-blue-500"
             error={errors.email ? errors.email.message : ""}
           />
 
@@ -93,26 +88,25 @@ const ForgotPassword = () => {
           {errMsg?.message && (
             <span
               role="alert"
-              className={`text-sm ${
-                errMsg?.status === "failed"
-                  ? "text-[#f64949fe]"
-                  : "text-[#2ba150fe]"
-              } mt-0.5`}
+              className={`text-sm font-medium ${
+                errMsg?.status === "failed" ? "text-red-500" : "text-green-500"
+              }`}
             >
               {errMsg?.message}
             </span>
           )}
 
-          {/* Submit Button */}
-          {isSubmitting ? (
-            <Loading />
-          ) : (
-            <CustomButton
-              type="submit"
-              containerStyles="w-full bg-primary text-white py-3 rounded-full text-sm font-medium"
-              title="Submit"
-            />
-          )}
+          <div className="w-full h-12">
+            {isSubmitting ? (
+              <Loading />
+            ) : (
+              <CustomButton
+                type="submit"
+                containerStyles="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 rounded-full text-sm font-bold shadow-lg hover:shadow-xl"
+                title="Submit"
+              />
+            )}
+          </div>
         </form>
       </div>
     </div>

@@ -1,5 +1,7 @@
 /* src/styles/tailwind.css */
 
+@import url("https://fonts.googleapis.com/css2?family=Vollkorn:ital,wght@0,400..900;1,400..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
 /* Ensure these directives are included */
 @tailwind base;
 @tailwind components;
@@ -14,5 +16,21 @@
   .scrollbar-hidden {
     -ms-overflow-style: none; /* Internet Explorer 10+ */
     scrollbar-width: none; /* Firefox */
+  }
+}
+
+/* Apply Fonts */
+@layer base {
+  body {
+    @apply font-body; /* Work Sans for the body */
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading; /* Vollkorn for headings */
   }
 }

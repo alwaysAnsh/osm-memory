@@ -13,8 +13,8 @@ export default {
         offWhite: "#EBE9E1",
       },
       fontFamily: {
-        headline: ["Futura", "Roboto Condensed", "sans-serif"],
-        body: ["Roboto", "Helvetica", "sans-serif"],
+        heading: ["Vollkorn", "serif"], // Vollkorn for headings
+        body: ["Work Sans", "sans-serif"], // Work Sans for body
       },
     },
     screens: {

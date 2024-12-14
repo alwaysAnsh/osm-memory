@@ -2,7 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Full screen height */
+  width: 100%; /* Ensure it only takes the width of its parent */
+  height: 50px; /* Match the button height or set a consistent height */
 }
 .loading-dot {
   width: 15px;

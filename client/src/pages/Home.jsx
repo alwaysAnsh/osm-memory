@@ -1,4 +1,4 @@
-import {React, useState, useEffect} from "react";
+import { React, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -10,7 +10,7 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
-import axios from 'axios'
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { FaFile } from "react-icons/fa";
 
@@ -37,10 +37,9 @@ const slide_image_7 =
 const Home = () => {
   const { user } = useSelector((state) => state.user); // Get user state from Redux
   const [categories, setCategories] = useState([]);
-  
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
 
   const fetchCategories = async () => {
     try {
@@ -49,17 +48,14 @@ const Home = () => {
       );
       const categoriesData = response.data.categories;
       setCategories(categoriesData);
-
-      
-      
     } catch (error) {
       console.error("Error fetching categories:", error);
     }
   };
 
   useEffect(() => {
-      fetchCategories();
-    }, []);
+    fetchCategories();
+  }, []);
 
   return (
     <div className="bg-offWhite flex flex-col min-h-screen ">
@@ -72,7 +68,7 @@ const Home = () => {
             grabCursor={true}
             centeredSlides={false} // Do not center each image, show multiple
             loop={true}
-            slidesPerView={1} 
+            slidesPerView={1}
             spaceBetween={0} // Set this to 0 for no space between images
             coverflowEffect={{
               rotate: 0,
@@ -85,12 +81,6 @@ const Home = () => {
               disableOnInteraction: false, // Prevent autoplay from being disabled after interaction
             }}
             pagination={{ el: ".swiper-pagination", clickable: true }}
-            navigation={{
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-              clickable: true,
-            }}
-           
             modules={[EffectCoverflow, Pagination, Navigation, Autoplay]} // Include Autoplay module
             className="swiper_container"
           >
@@ -163,28 +153,21 @@ const Home = () => {
                 />
               </div>
             </SwiperSlide>
-
-
-            {/* Slider controls */}
-            <div className="slider-controler">
-              <div className="swiper-button-prev slider-arrow">
-                <ion-icon name="arrow-back-outline"></ion-icon>
-              </div>
-              <div className="swiper-button-next slider-arrow">
-                <ion-icon name="arrow-forward-outline"></ion-icon>
-              </div>
-              <div className="swiper-pagination"></div>
-            </div>
           </Swiper>
         </div>
 
         {/* categories section */}
-            <h2  className='text-left text-3xl mb-3 mt-3'>Explore the categories</h2>
+        <h2 className="text-left text-3xl mb-3 mt-3 underline decoration-primaryRed underline-offset-4 ">
+          Explore the categories
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
-            {categories.slice(0,4).map((category) => (
-              <div key={category.name} className="border rounded-lg shadow-lg p-4 bg-white hover:shadow-xl transition-shadow shadow-pink-200">
+          {categories.slice(0, 4).map((category) => (
+            <div
+              key={category.name}
+              className="border rounded-lg shadow-lg p-4 bg-white hover:shadow-xl transition-shadow shadow-pink-200"
+            >
               <h2 className="text-lg font-semibold mb-4">{category.name}</h2>
-        
+
               {/* Horizontal Scrollable Container for Subcategories */}
               <div className="flex flex-row space-x-4 overflow-x-auto py-2 scrollbar-hidden">
                 {category.subcategories.map((subcat, index) => (
@@ -194,7 +177,7 @@ const Home = () => {
                   >
                     {/* Wrap subcategory in Link to make it clickable */}
                     <Link
-                      to={'/auth-L'} // Corrected path
+                      to={"/auth-L"} // Corrected path
                       className="flex flex-col items-center text-center cursor-pointer"
                     >
                       {/* Render Uploaded Image as Icon */}
@@ -206,28 +189,25 @@ const Home = () => {
                             className="w-12 h-12 object-cover rounded-full"
                           />
                         ) : (
-                          <FaFile style={{ color: "#FF5733", fontSize: "20px" }} />
+                          <FaFile
+                            style={{ color: "#FF5733", fontSize: "20px" }}
+                          />
                         )}
                       </div>
-                      <h3 className="text-sm font-medium truncate">{subcat.name}</h3>
+                      <h3 className="text-sm font-medium truncate">
+                        {subcat.name}
+                      </h3>
                     </Link>
-
-                    
                   </div>
-                  
-                  
                 ))}
               </div>
             </div>
-            ))}
+          ))}
+        </div>
 
-
-          </div>
-
-          <Link to='/auth-L' className='mt-8'>
-            <ExploreMore/>
-          </Link>
-
+        <Link to="/auth-L" className="mt-8">
+          <ExploreMore />
+        </Link>
 
         <div className="w-screen overflow-x-auto bg-offWhite mt-5">
           <Testimonial />
