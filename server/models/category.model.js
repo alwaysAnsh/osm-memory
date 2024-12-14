@@ -1,31 +1,4 @@
 // // models/Category.js
-// import mongoose from 'mongoose';
-
-// const categorySchema = new mongoose.Schema({
-//   name: {
-//     type: String,
-//     required: true,
-//     unique: true
-//   },
-//   description: {
-//     type: String,
-//     required: true
-//   },
-//   file: { 
-//     type: String 
-//   }, // Optional file URL
-//   createdAt: {
-//     type: Date,
-//     default: Date.now
-//   },
-//   // flashcards: [{
-//   //   type: mongoose.Schema.Types.ObjectId,
-//   //   ref: 'Flashcard'
-//   // }]
-// });
-
-// const Category = mongoose.model('Category', categorySchema);
-// export default Category;
 
 import mongoose from "mongoose";
 
