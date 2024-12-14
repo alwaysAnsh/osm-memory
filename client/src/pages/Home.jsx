@@ -1,5 +1,7 @@
-import React from "react";
+import {React, useState, useEffect} from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import Navbar from "../components/user/Navbar";
 import Testimonial from "../components/user/Testimonial";
 import Footer from "../components/user/Fotter";
@@ -8,8 +10,13 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import axios from 'axios'
+import { Link } from "react-router-dom";
+import { FaFile } from "react-icons/fa";
 
 import { EffectCoverflow, Pagination, Navigation, Autoplay } from "swiper"; // Import Autoplay
+import CategoryCard from "../components/user/CategoryCard";
+import ExploreMore from "../components/common/ExploreMore";
 
 // Image URLs from Pexels
 const slide_image_1 =
@@ -29,6 +36,30 @@ const slide_image_7 =
 
 const Home = () => {
   const { user } = useSelector((state) => state.user); // Get user state from Redux
+  const [categories, setCategories] = useState([]);
+  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/api/v2/get-all-categories`
+      );
+      const categoriesData = response.data.categories;
+      setCategories(categoriesData);
+
+      
+      
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+  useEffect(() => {
+      fetchCategories();
+    }, []);
 
   return (
     <div className="bg-offWhite flex flex-col min-h-screen ">
@@ -146,6 +177,57 @@ const Home = () => {
             </div>
           </Swiper>
         </div>
+
+        {/* categories section */}
+            <h2  className='text-left text-3xl mb-3 mt-3'>Explore the categories</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-6">
+            {categories.slice(0,4).map((category) => (
+              <div key={category.name} className="border rounded-lg shadow-lg p-4 bg-white hover:shadow-xl transition-shadow shadow-pink-200">
+              <h2 className="text-lg font-semibold mb-4">{category.name}</h2>
+        
+              {/* Horizontal Scrollable Container for Subcategories */}
+              <div className="flex flex-row space-x-4 overflow-x-auto py-2 scrollbar-hidden">
+                {category.subcategories.map((subcat, index) => (
+                  <div
+                    key={`${subcat.name}-${index}`}
+                    className="flex flex-col items-center text-center"
+                  >
+                    {/* Wrap subcategory in Link to make it clickable */}
+                    <Link
+                      to={'/auth-L'} // Corrected path
+                      className="flex flex-col items-center text-center cursor-pointer"
+                    >
+                      {/* Render Uploaded Image as Icon */}
+                      <div className="flex items-center justify-center w-16 h-16 bg-gray-50 rounded-full mb-2 shadow-md shadow-green-100 transition-shadow hover:shadow-lg hover:shadow-green-100  hover:animate-bounce">
+                        {subcat.icon ? (
+                          <img
+                            src={subcat.icon} // Image URL
+                            alt={subcat.name}
+                            className="w-12 h-12 object-cover rounded-full"
+                          />
+                        ) : (
+                          <FaFile style={{ color: "#FF5733", fontSize: "20px" }} />
+                        )}
+                      </div>
+                      <h3 className="text-sm font-medium truncate">{subcat.name}</h3>
+                    </Link>
+
+                    
+                  </div>
+                  
+                  
+                ))}
+              </div>
+            </div>
+            ))}
+
+
+          </div>
+
+          <Link to='/auth-L' className='mt-8'>
+            <ExploreMore/>
+          </Link>
+
 
         <div className="w-screen overflow-x-auto bg-offWhite mt-5">
           <Testimonial />

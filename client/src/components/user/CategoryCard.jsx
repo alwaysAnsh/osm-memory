@@ -11,7 +11,7 @@ const CategoryCard = ({ category }) => {
     );
   }
   return (
-    <div className="border rounded-lg shadow-md p-4 bg-white hover:shadow-lg transition-shadow">
+    <div className="border rounded-lg shadow-lg p-4 bg-white hover:shadow-lg transition-shadow shadow-pink-200">
       <h2 className="text-lg font-semibold mb-4">{category.name}</h2>
 
       {/* Horizontal Scrollable Container for Subcategories */}
@@ -27,7 +27,7 @@ const CategoryCard = ({ category }) => {
               className="flex flex-col items-center text-center cursor-pointer"
             >
               {/* Render Uploaded Image as Icon */}
-              <div className="flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-2">
+              <div className="flex items-center justify-center w-16 h-16 bg-gray-50 rounded-full mb-2 shadow-md shadow-green-100 transition-shadow hover:shadow-lg hover:shadow-green-100  hover:animate-bounce">
                 {subcat.icon ? (
                   <img
                     src={subcat.icon} // Image URL
