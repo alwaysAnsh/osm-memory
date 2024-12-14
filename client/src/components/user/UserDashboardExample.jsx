@@ -76,7 +76,7 @@ const UserDashboard = () => {
   return (
     <div>
       <Navbar />
-      <div className="px-4 flex flex-col justify-center items-center bg-bgPrimary">
+      <div className="px-4 flex flex-col justify-center items-center bg-gradient-to-bl from-[#ffe4e6]  to-[#ccfbf1]">
         <div></div>
         <h1 className="text-xl font-bold my-4">
           Welcome, {user.firstName}! 😊
