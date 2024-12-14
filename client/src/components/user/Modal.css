@@ -1,0 +1,81 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.modal-container {
+  position: relative;
+  width: 600px; /* Increased width for a larger card */
+  max-width: 90%;
+  background: #07182e;
+  border-radius: 20px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align content to the left */
+  text-align: left; /* Ensure text aligns to the left */
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-container::before {
+  content: "";
+  position: absolute;
+  width: 0; /* Remove background animation, width set to 0 */
+  height: 0; /* Remove background animation */
+  background-image: none; /* Remove gradient background */
+}
+
+.modal-container::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  background: #07182e;
+  border-radius: 15px;
+  z-index: 1;
+}
+
+.modal-content {
+  z-index: 2;
+  padding: 35px; /* Increased padding for more space */
+  color: white;
+  font-size: 1.5em; /* Increased font size for better readability */
+  line-height: 1.8; /* Increased line spacing for better text flow */
+}
+
+.modal-content ul {
+  list-style: none; /* Remove bullets from lists */
+  padding: 0;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px; /* Adjusted spacing for larger modal */
+  right: 15px;
+  z-index: 2;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px; /* Increased font size for better visibility */
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.modal-close:hover {
+  color: #ff4c4c; /* Bright red hover color */
+}
+
+/* Fade-in animation for the modal overlay */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

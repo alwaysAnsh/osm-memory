@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Papa from "papaparse";
+import Modal from "./InstructionsModal"; // Import the Modal component
 import "./Flashcard.css"; // Import the CSS file
 
 const FlashcardProgress = () => {
@@ -16,6 +17,7 @@ const FlashcardProgress = () => {
   const [showAnswer, setShowAnswer] = useState(false);
   const [subcategoryId, setSubcategoryId] = useState("");
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const [showModal, setShowModal] = useState(true); // State to manage modal visibility
 
   const fetchFileFromSubcategory = async (categoryName, subcategoryName) => {
     try {
@@ -160,6 +162,22 @@ const FlashcardProgress = () => {
 
   return (
     <div className="flex items-center justify-center h-screen bg-black">
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <h2 className="text-xl font-bold mb-4">Quiz Instructions</h2>
+        <ul className="list-disc pl-4 text-sm">
+          <li>Read each question carefully.</li>
+          <li>Click "Show Answer" to reveal the answer.</li>
+          <li>Mark the question as correct or wrong.</li>
+          <li>You can reset progress at any time.</li>
+        </ul>
+        <button
+          className="mt-4 bg-indigo-500 text-white py-2 px-4 rounded hover:bg-indigo-600"
+          onClick={() => setShowModal(false)}
+        >
+          Got It!
+        </button>
+      </Modal>
+
       <div className="flashcard-container text-center text-black">
         {!quizCompleted ? (
           <>
