@@ -1,18 +1,34 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import {useSelector} from 'react-redux'
+import { useSelector } from "react-redux";
 
 const UpdateCategory = () => {
-    const {adminToken} = useSelector((state) => state.auth)
+  const { adminToken } = useSelector((state) => state.auth);
   const { categoryId } = useParams();
-  
+
   const [category, setCategory] = useState({});
   const [subcategories, setSubcategories] = useState([]);
   const [updatedCategoryName, setUpdatedCategoryName] = useState("");
+  const [icon, setIcon] = useState(null); // Store updated icon
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  
+
+  const handleIconChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      Resizer.imageFileResizer(
+        file,
+        100,
+        100,
+        "JPEG",
+        100,
+        0,
+        (uri) => setIcon(uri),
+        "base64"
+      );
+    }
+  };
 
   // Fetch category and subcategory details
   useEffect(() => {
@@ -22,10 +38,8 @@ const UpdateCategory = () => {
           `${import.meta.env.VITE_API_URL}/api/v2/get-category/${categoryId}`,
           {
             headers: {
-               
-                Authorization: `Bearer ${adminToken}`, // Include token for authorization
-              },
-              
+              Authorization: `Bearer ${adminToken}`, // Include token for authorization
+            },
           }
         );
         setCategory(response.data.category);
@@ -47,10 +61,10 @@ const UpdateCategory = () => {
         `${import.meta.env.VITE_API_URL}/api/v2/category/${categoryId}`,
         { name: updatedCategoryName },
         {
-          headers: { 
+          headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${adminToken}`,
-           },
+          },
         }
       );
       alert("Category name updated successfully!");
@@ -69,22 +83,19 @@ const UpdateCategory = () => {
       formData.append("newName", updatedData.name);
       formData.append("description", updatedData.description);
       if (updatedData.file) formData.append("file", updatedData.file);
-
-      console.log('file:', updatedData.file)
+      if (updatedData.icon) formData.append("icon", updatedData.icon); // Include icon if provided
 
       const response = await axios.put(
         `${import.meta.env.VITE_API_URL}/api/v2/subcategory/${subcategoryId}`,
         formData,
         {
-          
-            headers: { 
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${adminToken}`,
-             },
-          
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${adminToken}`,
+          },
         }
       );
-      console.log("response subcategory :", response.data.subcategory )
+      console.log("response subcategory:", response.data.subcategory);
       alert("Subcategory updated successfully!");
       setSubcategories((prev) =>
         prev.map((sub) =>
@@ -102,10 +113,14 @@ const UpdateCategory = () => {
 
   return (
     <div className="p-6 max-w-4xl mx-auto bg-white rounded-lg shadow-lg">
-      <h1 className="text-3xl font-extrabold text-gray-800 mb-6">Update Category</h1>
-  
+      <h1 className="text-3xl font-extrabold text-gray-800 mb-6">
+        Update Category
+      </h1>
+
       <div className="mb-6">
-        <label className="block text-lg font-medium text-gray-700 mb-2">Category Name</label>
+        <label className="block text-lg font-medium text-gray-700 mb-2">
+          Category Name
+        </label>
         <input
           type="text"
           value={updatedCategoryName}
@@ -119,18 +134,22 @@ const UpdateCategory = () => {
           Update Category Name
         </button>
       </div>
-  
+
       <h2 className="text-2xl font-bold text-gray-800 mb-6">Subcategories</h2>
-  
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {subcategories.map((subcategory) => (
           <div
             key={subcategory._id}
             className="bg-white p-6 rounded-lg shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300"
           >
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">{subcategory.name}</h3>
-  
-            <label className="block text-sm font-medium text-gray-600 mb-2">Subcategory Name</label>
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">
+              {subcategory.name}
+            </h3>
+
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              Subcategory Name
+            </label>
             <input
               type="text"
               value={subcategory.name}
@@ -145,8 +164,10 @@ const UpdateCategory = () => {
               }
               className="w-full p-2 mb-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-  
-            <label className="block text-sm font-medium text-gray-600 mb-2">Description</label>
+
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              Description
+            </label>
             <textarea
               value={subcategory.description}
               onChange={(e) =>
@@ -160,8 +181,10 @@ const UpdateCategory = () => {
               }
               className="w-full p-2 mb-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             ></textarea>
-  
-            <label className="block text-sm font-medium text-gray-600 mb-2">Choose New File</label>
+
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              Choose New File
+            </label>
             <input
               type="file"
               accept=".xlsx,.csv,.json"
@@ -181,11 +204,11 @@ const UpdateCategory = () => {
                 Selected File: {subcategory.file.name}
               </p>
             )}
-  
+
             <button
               onClick={() =>
                 handleUpdateSubcategory(subcategory._id, {
-                  category:updatedCategoryName,
+                  category: updatedCategoryName,
                   name: subcategory.name,
                   description: subcategory.description,
                   file: subcategory.file,
@@ -200,7 +223,6 @@ const UpdateCategory = () => {
       </div>
     </div>
   );
-  
 };
 
 export default UpdateCategory;

@@ -28,9 +28,9 @@ const CategoryCard = ({ category }) => {
             >
               {/* Render Uploaded Image as Icon */}
               <div className="flex items-center justify-center w-16 h-16 bg-gray-50 rounded-full mb-2 shadow-md shadow-green-100 transition-shadow hover:shadow-lg hover:shadow-green-100  hover:animate-bounce">
-                {subcat.icon ? (
+                {subcat.iconUrl ? (
                   <img
-                    src={subcat.icon} // Image URL
+                    src={subcat.iconUrl} // Image URL
                     alt={subcat.name}
                     className="w-12 h-12 object-cover rounded-full"
                   />
