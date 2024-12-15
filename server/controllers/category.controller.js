@@ -121,6 +121,7 @@ export const updateSubcategory = async (req, res) => {
     const { subcategoryId } = req.params;
     const { newName } = req.body;
 
+    // Find the category containing the subcategory
     const category = await Category.findOne({
       "subcategories._id": subcategoryId,
     });
@@ -130,14 +131,25 @@ export const updateSubcategory = async (req, res) => {
         .json({ message: "Category or subcategory not found." });
     }
 
+    // Find the specific subcategory
     const subcategory = category.subcategories.id(subcategoryId);
+
+    // Update the subcategory name if provided
     if (newName) subcategory.name = newName;
 
+    // If a file (e.g., questions) is provided, upload it
     if (req.file?.path) {
       const upload = await uploadOnCloudinary(req.file.path);
       subcategory.fileUrl = upload.secure_url;
     }
 
+    // If an icon is provided, upload it
+    if (req.files?.icon?.[0]?.path) {
+      const iconUpload = await uploadOnCloudinary(req.files.icon[0].path);
+      subcategory.iconUrl = iconUpload.secure_url;
+    }
+
+    // Save the updated category
     await category.save();
 
     res.status(200).json({

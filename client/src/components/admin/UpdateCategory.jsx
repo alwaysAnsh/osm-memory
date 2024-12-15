@@ -95,7 +95,6 @@ const UpdateCategory = () => {
           },
         }
       );
-      console.log("response subcategory:", response.data.subcategory);
       alert("Subcategory updated successfully!");
       setSubcategories((prev) =>
         prev.map((sub) =>
@@ -204,7 +203,23 @@ const UpdateCategory = () => {
                 Selected File: {subcategory.file.name}
               </p>
             )}
-
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              Choose New Icon
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) =>
+                setSubcategories((prev) =>
+                  prev.map((sub) =>
+                    sub._id === subcategory._id
+                      ? { ...sub, icon: e.target.files[0] }
+                      : sub
+                  )
+                )
+              }
+              className="w-full p-2 mb-4 border border-gray-300 rounded-lg shadow-sm"
+            />
             <button
               onClick={() =>
                 handleUpdateSubcategory(subcategory._id, {
@@ -212,6 +227,7 @@ const UpdateCategory = () => {
                   name: subcategory.name,
                   description: subcategory.description,
                   file: subcategory.file,
+                  icon: subcategory.icon,
                 })
               }
               className="mt-4 w-full px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
