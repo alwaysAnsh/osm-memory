@@ -19,21 +19,12 @@ const storage = multer.diskStorage({
   },
 });
 
-// Multer file filter (optional, to only allow image uploads)
-// const fileFilter = (req, file, cb) => {
-//   if (!file.mimetype.startsWith("image")) {
-//     return cb(new Error("Only image files are allowed!"), false);
-//   }
-//   cb(null, true);
-// };
-
-
 // Multer file filter (optional, to only allow file uploads)
 const fileFilter = (req, file, cb) => {
   const allowedMimeTypes = [
-    "application/json",            // JSON files
-    "text/csv",                    // CSV files
-    "application/vnd.ms-excel",    // Older Excel files (.xls)
+    "application/json", // JSON files
+    "text/csv", // CSV files
+    "application/vnd.ms-excel", // Older Excel files (.xls)
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // Newer Excel files (.xlsx)
   ];
 
@@ -43,9 +34,24 @@ const fileFilter = (req, file, cb) => {
   cb(null, true);
 };
 
+// Multer setup for multiple file types
+const imageFilter = (req, file, cb) => {
+  if (!file.mimetype.startsWith("image")) {
+    return cb(
+      new Error("Only image files (PNG, JPEG, etc.) are allowed!"),
+      false
+    );
+  }
+  cb(null, true);
+};
 
-export const upload = multer({
+// Multer setup to handle both questions file and icon
+const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB file size limit
-  fileFilter,
-});
+}).fields([
+  { name: "file", maxCount: 1 }, // For questions file
+  { name: "icon", maxCount: 1 }, // For icon image
+]);
+
+export { upload };

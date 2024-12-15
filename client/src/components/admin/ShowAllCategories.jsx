@@ -11,20 +11,22 @@ const ShowAllCategories = ({
   const navigate = useNavigate();
 
   const handleDelete = async (categoryId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this category?"
+    );
+    if (!confirmDelete) return;
+
     try {
       const response = await axios.delete(
         `${import.meta.env.VITE_API_URL}/api/v2/delete-category/${categoryId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${adminToken}`, // Include token for authorization
-          },
-        }
+        { headers: { Authorization: `Bearer ${adminToken}` } }
       );
-
-      if (response.data.success === false) {
+      if (response.data.success) {
+        alert("Category deleted successfully");
+        onCategoryDelete(categoryId); // Call parent-provided function
+      } else {
         console.log(response.data?.message);
       }
-      alert(`Category deleted successfully`);
     } catch (error) {
       console.error("Error deleting category:", error);
     }

@@ -12,8 +12,12 @@ const subcategorySchema = new mongoose.Schema({
     default: "",
   },
   fileUrl: {
-    type: String, // URL of the file stored on Cloudinary
+    type: String, // URL of the file (questions document) stored on Cloudinary
     required: true,
+  },
+  iconUrl: {
+    type: String, // URL of the icon/image stored on Cloudinary
+    default: "", // Optional, can be empty if no icon is uploaded
   },
 });
 
@@ -33,4 +37,3 @@ const categorySchema = new mongoose.Schema({
 const Category = mongoose.model("Category", categorySchema);
 
 export default Category;
-
